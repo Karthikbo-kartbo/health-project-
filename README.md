@@ -9,9 +9,9 @@
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
-<a href="https://x.com/SachinSach22591?t=gfT6RTZlMf0NbeDObDZJ7w&s=08" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="kshamay10" height="30" width="40" /></a>
-<a href="https://www.linkedin.com/in/sachin-sachin-522b05331?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="kshamay-p-bharadwaj-192113299" height="30" width="40" /></a>
-<a href="https://www.instagram.com/sachindevadiga21/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="kshamaybharadwaj" height="30" width="40" /></a>
+<a href="https://x.com/KarthikBO06?t=X4_UZakS0ndr_U3plqjINA&s=09" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="kshamay10" height="30" width="40" /></a>
+<a href="https://www.linkedin.com/in/karthik-karthik-b-o-939b41383?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="Karthik-B-O-192113299" height="30" width="40" /></a>
+<a href="https://www.instagram.com/_.karthik._06_?igsh=cTU0aGRiaXEyaGhy"blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="karthikbo" height="30" width="40" /></a>
 
 </p>
 
