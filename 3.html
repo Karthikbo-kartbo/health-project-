@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedStudy - Medical Student Resources</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --ai-color: #9b59b6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Entry Animation */
+        #entry-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeOut 1s ease-in-out 3s forwards;
+        }
+        
+        .logo-animation {
+            text-align: center;
+            color: white;
+        }
+        
+        .logo-animation h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+        
+        .logo-animation p {
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 1.5s forwards;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; visibility: hidden; }
+        }
+        
+        /* Login Page */
+        #login-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .login-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .login-container h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .login-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .toggle-form {
+            color: var(--secondary);
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.9rem;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info span {
+            margin-right: 1rem;
+        }
+        
+        .logout-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .search-bar {
+            display: flex;
+            margin-left: 2rem;
+        }
+        
+        .search-bar input {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        
+        .search-bar button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        /* AI Assistant Button */
+        .ai-assistant-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background-color: var(--ai-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 99;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        
+        .ai-assistant-btn:hover {
+            transform: scale(1.1);
+            background-color: #8e44ad;
+        }
+        
+        .ai-assistant-btn.pulse {
+            animation: aiPulse 2s infinite;
+        }
+        
+        @keyframes aiPulse {
+            0% { box-shadow: 0 0 0 0 rgba(155, 89, 182, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(155, 89, 182, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(155, 89, 182, 0); }
+        }
+        
+        /* AI Assistant Panel */
+        .ai-assistant-panel {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 400px;
+            height: 500px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            transform: translateY(20px);
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.3s, opacity 0.3s, visibility 0.3s;
+        }
+        
+        .ai-assistant-panel.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .ai-header {
+            background-color: var(--ai-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ai-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .close-ai {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .ai-conversation {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .ai-message {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            border-radius: 18px;
+            line-height: 1.4;
+        }
+        
+        .ai-message.user {
+            align-self: flex-end;
+            background-color: var(--secondary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .ai-message.bot {
+            align-self: flex-start;
+            background-color: #f1f1f1;
+            color: #333;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .ai-typing {
+            align-self: flex-start;
+            background-color: #f1f1f1;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            padding: 0.8rem 1rem;
+            border-radius: 18px;
+            display: flex;
+            gap: 0.3rem;
+        }
+        
+        .ai-typing span {
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
+            background-color: #999;
+            display: inline-block;
+            animation: typing 1.5s infinite ease-in-out;
+        }
+        
+        .ai-typing span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .ai-typing span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .ai-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .ai-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 24px;
+            outline: none;
+        }
+        
+        .ai-input button {
+            background-color: var(--ai-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .quick-questions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            padding: 0 1rem 1rem;
+        }
+        
+        .quick-question {
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 16px;
+            padding: 0.5rem 0.8rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .quick-question:hover {
+            background-color: #e1e1e1;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+            margin: 0.5rem auto;
+        }
+        
+        /* Subject Cards */
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .subject-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            background-color: var(--secondary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-body ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-body ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-body ul li:last-child {
+            border-bottom: none;
+        }
+        
+        .card-body a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .card-footer {
+            padding: 1rem 1.5rem;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Progress Section */
+        .progress-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--success);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Resources Section */
+        .resources {
+            background-color: white;
+            padding: 3rem 0;
+            margin: 3rem 0;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+        
+        .resource-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #666;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .tab-btn.active {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        .tab-btn.active:after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .resource-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .resource-item {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        
+        .resource-item:hover {
+            background-color: #e9ecef;
+        }
+        
+        .resource-item.completed {
+            border-left: 4px solid var(--success);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Study Tools */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tool-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Flashcard Section */
+        .flashcard-section {
+            background-color: var(--primary);
+            color: white;
+            padding: 3rem 0;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .flashcard-container {
+            max-width: 600px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+        
+        .flashcard {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+        
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .flashcard-front {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .flashcard-back {
+            background-color: var(--secondary);
+            color: white;
+            transform: rotateY(180deg);
+        }
+        
+        .flashcard-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .search-bar {
+                margin: 1rem 0 0;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .subject-grid, .tools-grid, .resource-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .resource-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .user-info {
+                margin-top: 1rem;
+            }
+            
+            .ai-assistant-panel {
+                width: 90%;
+                height: 70%;
+                bottom: 1rem;
+                right: 5%;
+            }
+            
+            .quick-questions {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Entry Animation -->
+    <div id="entry-animation">
+        <div class="logo-animation">
+            <h1>🩺 MedStudy</h1>
+            <p>Your Medical Education Companion</p>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login-page">
+        <div class="login-container">
+            <h2 id="login-title">Login to MedStudy</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            <form id="register-form" class="hidden">
+                <div class="form-group">
+                    <label for="new-username">Username</label>
+                    <input type="text" id="new-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">Password</label>
+                    <input type="password" id="new-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                <button type="submit" class="login-btn">Create Account</button>
+            </form>
+            <button id="toggle-form" class="toggle-form">Don't have an account? Sign up</button>
+        </div>
+    </div>
+
+    <!-- Main Website (initially hidden) -->
+    <div id="main-website" class="hidden">
+        <!-- Header -->
+        <header>
+            <div class="container header-content">
+                <div class="logo">
+                    <span class="logo-icon">🩺</span>
+                    <h1>MedStudy</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#subjects">Subjects</a></li>
+                        <li><a href="#resources">Resources</a></li>
+                        <li><a href="#tools">Study Tools</a></li>
+                        <li><a href="#flashcards">Flashcards</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span id="welcome-user">Welcome, User!</span>
+                    <button class="logout-btn" id="logout-btn">Logout</button>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search medical topics...">
+                    <button>Search</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- AI Assistant Button -->
+        <button class="ai-assistant-btn pulse" id="ai-assistant-btn">🤖</button>
+
+        <!-- AI Assistant Panel -->
+        <div class="ai-assistant-panel" id="ai-assistant-panel">
+            <div class="ai-header">
+                <h3><span>🤖</span> MedStudy AI Assistant</h3>
+                <button class="close-ai" id="close-ai">✕</button>
+            </div>
+            <div class="ai-conversation" id="ai-conversation">
+                <div class="ai-message bot">
+                    Hello! I'm your MedStudy AI Assistant. I can help explain medical concepts, answer questions, and assist with your studies. How can I help you today?
+                </div>
+            </div>
+            <div class="quick-questions">
+                <button class="quick-question" data-question="Explain the renin-angiotensin system">Renin-angiotensin system</button>
+                <button class="quick-question" data-question="What are the branches of the external carotid artery?">External carotid branches</button>
+                <button class="quick-question" data-question="Differentiate between type 1 and type 2 diabetes">Type 1 vs Type 2 diabetes</button>
+                <button class="quick-question" data-question="List the cranial nerves and their functions">Cranial nerves</button>
+            </div>
+            <div class="ai-input">
+                <input type="text" id="ai-input" placeholder="Ask a medical question...">
+                <button id="ai-send">➤</button>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h2>Comprehensive Medical Study Resources</h2>
+                <p>Access high-quality study materials, flashcards, quizzes, and more to excel in your medical education.</p>
+                <a href="#subjects" class="cta-button">Explore Subjects</a>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main class="main-content container">
+            <!-- Progress Section -->
+            <section id="progress">
+                <h2 class="section-title">Your Learning Progress</h2>
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <h3>Overall Progress</h3>
+                        <span id="overall-progress">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="overall-progress-bar" style="width: 0%"></div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>Anatomy</span>
+                            <span id="anatomy-progress">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="anatomy-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>Physiology</span>
+                            <span id="physiology-progress">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="physiology-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>Pathology</span>
+                            <span id="pathology-progress">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="pathology-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Subjects Section -->
+            <section id="subjects">
+                <h2 class="section-title">Medical Subjects</h2>
+                <div class="subject-grid">
+                    <!-- Anatomy Card -->
+                    <div class="subject-card">
+                        <div class="card-header">
+                            <h3>Anatomy</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><a href="#" class="resource-link" data-subject="anatomy" data-topic="gross">Gross Anatomy</a></li>
+                                <li><a href="#" class="resource-link" data-subject="anatomy" data-topic="neuro">Neuroanatomy</a></li>
+                                <li><a href="#" class="resource-link" data-subject="anatomy" data-topic="embryo">Embryology</a></li>
+                                <li><a href="#" class="resource-link" data-subject="anatomy" data-topic="histo">Histology</a></li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn">View All Resources</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Physiology Card -->
+                    <div class="subject-card">
+                        <div class="card-header">
+                            <h3>Physiology</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><a href="#" class="resource-link" data-subject="physiology" data-topic="cardio">Cardiovascular System</a></li>
+                                <li><a href="#" class="resource-link" data-subject="physiology" data-topic="respiratory">Respiratory System</a></li>
+                                <li><a href="#" class="resource-link" data-subject="physiology" data-topic="renal">Renal Physiology</a></li>
+                                <li><a href="#" class="resource-link" data-subject="physiology" data-topic="endocrine">Endocrinology</a></li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn">View All Resources</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Pathology Card -->
+                    <div class="subject-card">
+                        <div class="card-header">
+                            <h3>Pathology</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><a href="#" class="resource-link" data-subject="pathology" data-topic="general">General Pathology</a></li>
+                                <li><a href="#" class="resource-link" data-subject="pathology" data-topic="systemic">Systemic Pathology</a></li>
+                                <li><a href="#" class="resource-link" data-subject="pathology" data-topic="hematology">Hematology</a></li>
+                                <li><a href="#" class="resource-link" data-subject="pathology" data-topic="oncology">Oncology</a></li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn">View All Resources</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Pharmacology Card -->
+                    <div class="subject-card">
+                        <div class="card-header">
+                            <h3>Pharmacology</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><a href="#" class="resource-link" data-subject="pharmacology" data-topic="autonomic">Autonomic Drugs</a></li>
+                                <li><a href="#" class="resource-link" data-subject="pharmacology" data-topic="cardio">Cardiovascular Drugs</a></li>
+                                <li><a href="#" class="resource-link" data-subject="pharmacology" data-topic="antimicrobial">Antimicrobials</a></li>
+                                <li><a href="#" class="resource-link" data-subject="pharmacology" data-topic="cns">CNS Drugs</a></li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn">View All Resources</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resources Section -->
+            <section id="resources" class="resources">
+                <div class="container">
+                    <h2 class="section-title">Study Resources</h2>
+                    <div class="resource-tabs">
+                        <button class="tab-btn active" data-tab="textbooks">Textbooks</button>
+                        <button class="tab-btn" data-tab="videos">Video Lectures</button>
+                        <button class="tab-btn" data-tab="question-banks">Question Banks</button>
+                        <button class="tab-btn" data-tab="mnemonics">Mnemonics</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="textbooks">
+                        <div class="resource-list">
+                            <div class="resource-item" data-resource="grays-anatomy">
+                                <div class="resource-icon">📚</div>
+                                <h3>Gray's Anatomy</h3>
+                                <p>Comprehensive anatomy reference</p>
+                            </div>
+                            <div class="resource-item" data-resource="guyton-physiology">
+                                <div class="resource-icon">📚</div>
+                                <h3>Guyton Physiology</h3>
+                                <p>Medical physiology textbook</p>
+                            </div>
+                            <div class="resource-item" data-resource="robbins-pathology">
+                                <div class="resource-icon">📚</div>
+                                <h3>Robbins Pathology</h3>
+                                <p>Pathology basis of disease</p>
+                            </div>
+                            <div class="resource-item" data-resource="katzung-pharmacology">
+                                <div class="resource-icon">📚</div>
+                                <h3>Katzung Pharmacology</h3>
+                                <p>Pharmacology & therapeutics</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="videos">
+                        <div class="resource-list">
+                            <div class="resource-item" data-resource="anatomy-videos">
+                                <div class="resource-icon">🎬</div>
+                                <h3>Anatomy Lectures</h3>
+                                <p>Complete dissection videos</p>
+                            </div>
+                            <div class="resource-item" data-resource="physiology-videos">
+                                <div class="resource-icon">🎬</div>
+                                <h3>Physiology Explained</h3>
+                                <p>System-by-system breakdown</p>
+                            </div>
+                            <div class="resource-item" data-resource="clinical-skills">
+                                <div class="resource-icon">🎬</div>
+                                <h3>Clinical Skills</h3>
+                                <p>Patient examination techniques</p>
+                            </div>
+                            <div class="resource-item" data-resource="pathology-cases">
+                                <div class="resource-icon">🎬</div>
+                                <h3>Pathology Cases</h3>
+                                <p>Real case discussions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Study Tools Section -->
+            <section id="tools">
+                <h2 class="section-title">Study Tools</h2>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-icon">📝</div>
+                        <h3>Note Templates</h3>
+                        <p>Organized templates for efficient note-taking</p>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">📊</div>
+                        <h3>Progress Tracker</h3>
+                        <p>Monitor your study progress and performance</p>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">🧠</div>
+                        <h3>Spaced Repetition</h3>
+                        <p>Optimize memory retention with SRS</p>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">👥</div>
+                        <h3>Study Groups</h3>
+                        <p>Connect with peers for collaborative learning</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Flashcards Section -->
+            <section id="flashcards" class="flashcard-section">
+                <div class="container">
+                    <h2 class="section-title" style="color: white;">Interactive Flashcards</h2>
+                    <div class="flashcard-container">
+                        <div class="flashcard" id="flashcard">
+                            <div class="flashcard-front">
+                                <h3>Question</h3>
+                                <p id="flashcard-question">What is the most common cause of hypercalcemia in hospitalized patients?</p>
+                                <p><small>Click to flip</small></p>
+                            </div>
+                            <div class="flashcard-back">
+                                <h3>Answer</h3>
+                                <p id="flashcard-answer">Malignancy</p>
+                                <p><small>Click to flip back</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flashcard-controls">
+                        <button class="btn" id="prev-card">Previous</button>
+                        <button class="btn" id="next-card">Next</button>
+                        <button class="btn" id="shuffle-cards">Shuffle</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>MedStudy</h3>
+                        <p>Your comprehensive medical education platform with curated resources for medical students.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#subjects">Subjects</a></li>
+                            <li><a href="#resources">Resources</a></li>
+                            <li><a href="#tools">Study Tools</a></li>
+                            <li><a href="#flashcards">Flashcards</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Contact Us</h3>
+                        <ul>
+                            <li>Email: info@medstudy.com</li>
+                            <li>Phone: (123) 456-7890</li>
+                            <li>Address: 123 Medical Drive, Edu City</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2023 MedStudy. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // User Management
+        let currentUser = null;
+        let users = JSON.parse(localStorage.getItem('medstudy_users')) || {};
+        
+        // AI Knowledge Base
+        const aiKnowledgeBase = {
+            "renin-angiotensin system": "The renin-angiotensin system (RAS) is a hormone system that regulates blood pressure and fluid balance. When renal blood flow is reduced, juxtaglomerular cells in the kidneys convert prorenin to renin, which is released into circulation. Renin converts angiotensinogen (produced by the liver) to angiotensin I. Angiotensin I is then converted to angiotensin II by angiotensin-converting enzyme (ACE) in the lungs. Angiotensin II causes vasoconstriction and stimulates aldosterone release from adrenal cortex, leading to sodium and water retention.",
+            
+            "external carotid artery branches": "The external carotid artery has 8 major branches: 1) Superior thyroid artery, 2) Ascending pharyngeal artery, 3) Lingual artery, 4) Facial artery, 5) Occipital artery, 6) Posterior auricular artery, 7) Maxillary artery, 8) Superficial temporal artery. Mnemonic: Some Anatomists Like Freaking Out Poor Medical Students.",
+            
+            "type 1 vs type 2 diabetes": "Type 1 diabetes is an autoimmune condition where the body attacks insulin-producing beta cells in the pancreas, leading to absolute insulin deficiency. It typically presents in childhood/young adulthood. Type 2 diabetes involves insulin resistance and relative insulin deficiency, often associated with obesity and older age. Treatment differs: Type 1 requires insulin, while Type 2 may be managed with oral medications, lifestyle changes, and sometimes insulin.",
+            
+            "cranial nerves": "There are 12 cranial nerves: I Olfactory (smell), II Optic (vision), III Oculomotor (eye movement, pupil constriction), IV Trochlear (eye movement), V Trigeminal (facial sensation, chewing), VI Abducens (eye movement), VII Facial (facial expression, taste), VIII Vestibulocochlear (hearing, balance), IX Glossopharyngeal (swallowing, taste), X Vagus (parasympathetic, swallowing), XI Accessory (neck movement), XII Hypoglossal (tongue movement). Mnemonic: Oh Oh Oh To Touch And Feel Very Good Velvet AH.",
+            
+            "myocardial infarction": "Myocardial infarction (heart attack) occurs when blood flow to part of the heart muscle is blocked, usually by a blood clot forming on a ruptured atherosclerotic plaque. Symptoms include chest pain/pressure, shortness of breath, nausea, and sweating. Diagnosis involves ECG changes (ST elevation) and elevated cardiac enzymes (troponin). Treatment includes aspirin, nitroglycerin, oxygen, morphine, and reperfusion therapy (thrombolytics or PCI).",
+            
+            "pneumonia": "Pneumonia is an infection that inflames air sacs in one or both lungs, which may fill with fluid. Causes include bacteria (Streptococcus pneumoniae most common), viruses, and fungi. Symptoms include cough with phlegm, fever, chills, and difficulty breathing. Treatment depends on cause and severity, ranging from oral antibiotics to hospitalization with IV antibiotics and oxygen therapy.",
+            
+            "hypertension": "Hypertension (high blood pressure) is defined as sustained BP ≥130/80 mmHg. Primary (essential) hypertension has no identifiable cause (90-95% of cases). Secondary hypertension results from an underlying condition like renal disease or endocrine disorders. Complications include stroke, heart attack, heart failure, and kidney disease. Treatment involves lifestyle modifications and antihypertensive medications like ACE inhibitors, ARBs, diuretics, or calcium channel blockers.",
+            
+            "asthma": "Asthma is a chronic inflammatory disorder of the airways characterized by reversible airflow obstruction and bronchospasm. Symptoms include wheezing, coughing, chest tightness, and shortness of breath. Triggers include allergens, exercise, cold air, and respiratory infections. Treatment involves quick-relief medications (bronchodilators like albuterol) and long-term control medications (inhaled corticosteroids)."
+        };
+        
+        // DOM Elements
+        const entryAnimation = document.getElementById('entry-animation');
+        const loginPage = document.getElementById('login-page');
+        const mainWebsite = document.getElementById('main-website');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const toggleFormBtn = document.getElementById('toggle-form');
+        const loginTitle = document.getElementById('login-title');
+        const welcomeUser = document.getElementById('welcome-user');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        // AI Elements
+        const aiAssistantBtn = document.getElementById('ai-assistant-btn');
+        const aiAssistantPanel = document.getElementById('ai-assistant-panel');
+        const closeAi = document.getElementById('close-ai');
+        const aiConversation = document.getElementById('ai-conversation');
+        const aiInput = document.getElementById('ai-input');
+        const aiSend = document.getElementById('ai-send');
+        const quickQuestions = document.querySelectorAll('.quick-question');
+        
+        // Progress Elements
+        const overallProgress = document.getElementById('overall-progress');
+        const overallProgressBar = document.getElementById('overall-progress-bar');
+        const anatomyProgress = document.getElementById('anatomy-progress');
+        const anatomyProgressBar = document.getElementById('anatomy-progress-bar');
+        const physiologyProgress = document.getElementById('physiology-progress');
+        const physiologyProgressBar = document.getElementById('physiology-progress-bar');
+        const pathologyProgress = document.getElementById('pathology-progress');
+        const pathologyProgressBar = document.getElementById('pathology-progress-bar');
+        
+        // Check if user is already logged in
+        function checkLoginStatus() {
+            const loggedInUser = localStorage.getItem('medstudy_current_user');
+            if (loggedInUser && users[loggedInUser]) {
+                currentUser = loggedInUser;
+                showMainWebsite();
+                updateProgressDisplay();
+            } else {
+                // Show login page after animation
+                setTimeout(() => {
+                    loginPage.style.display = 'flex';
+                }, 3500);
+            }
+        }
+        
+        // Show main website
+        function showMainWebsite() {
+            loginPage.style.display = 'none';
+            mainWebsite.classList.remove('hidden');
+            welcomeUser.textContent = `Welcome, ${currentUser}!`;
+        }
+        
+        // Update progress display
+        function updateProgressDisplay() {
+            if (!currentUser || !users[currentUser]) return;
+            
+            const userData = users[currentUser];
+            const progress = userData.progress || {
+                anatomy: 0,
+                physiology: 0,
+                pathology: 0,
+                pharmacology: 0
+            };
+            
+            // Calculate overall progress
+            const totalProgress = (progress.anatomy + progress.physiology + progress.pathology + progress.pharmacology) / 4;
+            
+            // Update progress bars
+            overallProgress.textContent = `${Math.round(totalProgress)}%`;
+            overallProgressBar.style.width = `${totalProgress}%`;
+            
+            anatomyProgress.textContent = `${progress.anatomy}%`;
+            anatomyProgressBar.style.width = `${progress.anatomy}%`;
+            
+            physiologyProgress.textContent = `${progress.physiology}%`;
+            physiologyProgressBar.style.width = `${progress.physiology}%`;
+            
+            pathologyProgress.textContent = `${progress.pathology}%`;
+            pathologyProgressBar.style.width = `${progress.pathology}%`;
+            
+            // Update completed resources
+            const completedResources = userData.completedResources || [];
+            document.querySelectorAll('.resource-item').forEach(item => {
+                const resourceId = item.getAttribute('data-resource');
+                if (completedResources.includes(resourceId)) {
+                    item.classList.add('completed');
+                } else {
+                    item.classList.remove('completed');
+                }
+            });
+        }
+        
+        // Update user progress
+        function updateProgress(subject, increment = 5) {
+            if (!currentUser || !users[currentUser]) return;
+            
+            if (!users[currentUser].progress) {
+                users[currentUser].progress = {
+                    anatomy: 0,
+                    physiology: 0,
+                    pathology: 0,
+                    pharmacology: 0
+                };
+            }
+            
+            // Increase progress for the subject, but not beyond 100%
+            users[currentUser].progress[subject] = Math.min(
+                100, 
+                users[currentUser].progress[subject] + increment
+            );
+            
+            // Save to localStorage
+            localStorage.setItem('medstudy_users', JSON.stringify(users));
+            
+            // Update display
+            updateProgressDisplay();
+        }
+        
+        // Mark resource as completed
+        function markResourceCompleted(resourceId) {
+            if (!currentUser || !users[currentUser]) return;
+            
+            if (!users[currentUser].completedResources) {
+                users[currentUser].completedResources = [];
+            }
+            
+            if (!users[currentUser].completedResources.includes(resourceId)) {
+                users[currentUser].completedResources.push(resourceId);
+                localStorage.setItem('medstudy_users', JSON.stringify(users));
+                updateProgressDisplay();
+            }
+        }
+        
+        // AI Assistant Functions
+        function toggleAIPanel() {
+            aiAssistantPanel.classList.toggle('active');
+            aiAssistantBtn.classList.toggle('pulse');
+        }
+        
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `ai-message ${isUser ? 'user' : 'bot'}`;
+            messageDiv.textContent = message;
+            aiConversation.appendChild(messageDiv);
+            aiConversation.scrollTop = aiConversation.scrollHeight;
+        }
+        
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'ai-typing';
+            typingDiv.innerHTML = '<span></span><span></span><span></span>';
+            typingDiv.id = 'typing-indicator';
+            aiConversation.appendChild(typingDiv);
+            aiConversation.scrollTop = aiConversation.scrollHeight;
+        }
+        
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+        
+        function processAIQuestion(question) {
+            // Add user message
+            addMessage(question, true);
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Clear input
+            aiInput.value = '';
+            
+            // Simulate AI processing delay
+            setTimeout(() => {
+                hideTypingIndicator();
+                
+                // Find the best matching response
+                let bestMatch = null;
+                let bestMatchScore = 0;
+                
+                for (const [key, value] of Object.entries(aiKnowledgeBase)) {
+                    const score = calculateMatchScore(question.toLowerCase(), key);
+                    if (score > bestMatchScore) {
+                        bestMatchScore = score;
+                        bestMatch = value;
+                    }
+                }
+                
+                // If we have a good match, use it
+                if (bestMatchScore > 0.3) {
+                    addMessage(bestMatch);
+                } else {
+                    // Otherwise, provide a generic response
+                    addMessage("I'm not sure about that specific medical topic. Try asking about common medical conditions, anatomy, physiology, or pharmacology. You could ask about the renin-angiotensin system, cranial nerves, or differences between type 1 and type 2 diabetes.");
+                }
+            }, 1500);
+        }
+        
+        function calculateMatchScore(question, keyword) {
+            const words = question.split(' ');
+            let score = 0;
+            
+            for (const word of words) {
+                if (keyword.includes(word) && word.length > 3) {
+                    score += 1;
+                }
+            }
+            
+            return score / words.length;
+        }
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check login status after page loads
+            setTimeout(checkLoginStatus, 3500);
+            
+            // Toggle between login and register forms
+            toggleFormBtn.addEventListener('click', function() {
+                if (loginForm.classList.contains('hidden')) {
+                    // Switch to login form
+                    loginForm.classList.remove('hidden');
+                    registerForm.classList.add('hidden');
+                    loginTitle.textContent = 'Login to MedStudy';
+                    toggleFormBtn.textContent = "Don't have an account? Sign up";
+                } else {
+                    // Switch to register form
+                    loginForm.classList.add('hidden');
+                    registerForm.classList.remove('hidden');
+                    loginTitle.textContent = 'Create an Account';
+                    toggleFormBtn.textContent = 'Already have an account? Login';
+                }
+            });
+            
+            // Login form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if (users[username] && users[username].password === password) {
+                    currentUser = username;
+                    localStorage.setItem('medstudy_current_user', username);
+                    showMainWebsite();
+                    updateProgressDisplay();
+                } else {
+                    alert('Invalid username or password');
+                }
+            });
+            
+            // Register form submission
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('new-username').value;
+                const password = document.getElementById('new-password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                if (users[username]) {
+                    alert('Username already exists');
+                    return;
+                }
+                
+                // Create new user
+                users[username] = {
+                    password: password,
+                    progress: {
+                        anatomy: 0,
+                        physiology: 0,
+                        pathology: 0,
+                        pharmacology: 0
+                    },
+                    completedResources: []
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('medstudy_users', JSON.stringify(users));
+                
+                // Auto login
+                currentUser = username;
+                localStorage.setItem('medstudy_current_user', username);
+                showMainWebsite();
+                updateProgressDisplay();
+                
+                alert('Account created successfully!');
+            });
+            
+            // Logout button
+            logoutBtn.addEventListener('click', function() {
+                currentUser = null;
+                localStorage.removeItem('medstudy_current_user');
+                loginPage.style.display = 'flex';
+                mainWebsite.classList.add('hidden');
+                
+                // Reset forms
+                loginForm.reset();
+                registerForm.reset();
+                if (registerForm.classList.contains('hidden') === false) {
+                    loginForm.classList.remove('hidden');
+                    registerForm.classList.add('hidden');
+                    loginTitle.textContent = 'Login to MedStudy';
+                    toggleFormBtn.textContent = "Don't have an account? Sign up";
+                }
+            });
+            
+            // AI Assistant Events
+            aiAssistantBtn.addEventListener('click', toggleAIPanel);
+            closeAi.addEventListener('click', toggleAIPanel);
+            
+            aiSend.addEventListener('click', function() {
+                if (aiInput.value.trim() !== '') {
+                    processAIQuestion(aiInput.value);
+                }
+            });
+            
+            aiInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && aiInput.value.trim() !== '') {
+                    processAIQuestion(aiInput.value);
+                }
+            });
+            
+            // Quick question buttons
+            quickQuestions.forEach(button => {
+                button.addEventListener('click', function() {
+                    const question = this.getAttribute('data-question');
+                    processAIQuestion(question);
+                });
+            });
+            
+            // Resource links - mark as completed and update progress
+            document.querySelectorAll('.resource-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const subject = this.getAttribute('data-subject');
+                    updateProgress(subject);
+                    alert(`Great! You've studied ${this.textContent}. Your progress has been updated.`);
+                });
+            });
+            
+            // Resource items - mark as completed
+            document.querySelectorAll('.resource-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const resourceId = this.getAttribute('data-resource');
+                    markResourceCompleted(resourceId);
+                    this.classList.add('completed');
+                    alert('Resource marked as completed!');
+                });
+            });
+            
+            // Tab functionality
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+                    
+                    // Show corresponding content
+                    const tabId = btn.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Flashcard functionality
+            const flashcard = document.getElementById('flashcard');
+            const prevBtn = document.getElementById('prev-card');
+            const nextBtn = document.getElementById('next-card');
+            const shuffleBtn = document.getElementById('shuffle-cards');
+            
+            // Sample flashcard data
+            const flashcards = [
+                { question: "What is the most common cause of hypercalcemia in hospitalized patients?", answer: "Malignancy" },
+                { question: "Which artery supplies blood to the majority of the small intestine?", answer: "Superior mesenteric artery" },
+                { question: "What is the most common type of kidney stone?", answer: "Calcium oxalate" },
+                { question: "Which cranial nerve is responsible for facial sensation?", answer: "Trigeminal nerve (CN V)" },
+                { question: "What is the normal range for blood pH?", answer: "7.35 - 7.45" }
+            ];
+            
+            let currentCardIndex = 0;
+            
+            // Flip card on click
+            flashcard.addEventListener('click', function() {
+                this.classList.toggle('flipped');
+            });
+            
+            // Update flashcard content
+            function updateFlashcard() {
+                document.getElementById('flashcard-question').textContent = flashcards[currentCardIndex].question;
+                document.getElementById('flashcard-answer').textContent = flashcards[currentCardIndex].answer;
+                flashcard.classList.remove('flipped');
+            }
+            
+            // Next card
+            nextBtn.addEventListener('click', function() {
+                currentCardIndex = (currentCardIndex + 1) % flashcards.length;
+                updateFlashcard();
+            });
+            
+            // Previous card
+            prevBtn.addEventListener('click', function() {
+                currentCardIndex = (currentCardIndex - 1 + flashcards.length) % flashcards.length;
+                updateFlashcard();
+            });
+            
+            // Shuffle cards
+            shuffleBtn.addEventListener('click', function() {
+                // Simple shuffle algorithm
+                for (let i = flashcards.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+                }
+                currentCardIndex = 0;
+                updateFlashcard();
+            });
+            
+            // Initialize first flashcard
+            updateFlashcard();
+        });
+    </script>
+</body>
+</html>
